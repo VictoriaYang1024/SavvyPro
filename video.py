@@ -12,7 +12,7 @@ def set_logger(logger_name, log_file, level = logging.INFO):
     format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     logger_info = logging.FileHandler(log_file,mode="w")
     logger_info.setFormatter(format)
-    logger_error = logging.StreamHandler()
+    logger_error = logging.FileHandler(log_file,mode="w")
     logger_error.setFormatter(format)
 
     logger.setLevel(level)
@@ -25,7 +25,7 @@ def main(file):
     if res == 1:
         return
     handle(res)
-    print("Completed! Check vedio_info.csv")
+    print("Completed! Check video_info.csv")
 
 def process_probe(file):
     proc = subprocess.Popen(['ffprobe', file],
@@ -131,7 +131,7 @@ def check_file():
             if get == "y":
                 convertMP4(file)
                 print("processing, wait 30 secs....")
-                time.sleep(30)
+                time.sleep(40)
                 file = lst[0] + ".mp4"
                 logger_info.info("The file is .mov, change to .mp4 file" + " Duration: " + str(time.time() - start))
             else:
